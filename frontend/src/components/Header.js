@@ -1,5 +1,6 @@
 import React from 'react'
 import {Navbar, NavDropdown, Nav, Form, FormControl, Button, Container} from "react-bootstrap";
+import {LinkContainer} from "react-router-bootstrap"
 
 function Header (props) {
   return (
@@ -7,12 +8,22 @@ function Header (props) {
       <header>
         <Navbar bg="light" expand="lg" collapseOnSelect>
           <Container>
-            <Navbar.Brand href="/">Coin App</Navbar.Brand>
+
+            <LinkContainer to="/">
+              <Navbar.Brand>Coin App</Navbar.Brand>
+            </LinkContainer>
+
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
-                <Nav.Link href="/"><i className="fas fa-home"></i> Home</Nav.Link>
-                <Nav.Link href="/statistics"><i className="fas fa-cubes"></i> Statisctics</Nav.Link>
+                <LinkContainer to="/">
+                  <Nav.Link><i className="fas fa-home"></i> Home</Nav.Link>
+                </LinkContainer>
+
+                <LinkContainer to="/statistics">
+                  <Nav.Link><i className="fas fa-cubes"></i> Statisctics</Nav.Link>
+                </LinkContainer>
+
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#">Action</NavDropdown.Item>
                   <NavDropdown.Item href="#">Another action</NavDropdown.Item>
