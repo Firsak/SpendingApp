@@ -9,54 +9,22 @@ from django.utils import timezone
 class Category(models.Model):
     # user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200, null=True, blank=True)
-    # icon =
+    icon = models.CharField(max_length=200, null=True, blank=True)
+    type = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
 
-
-class Wallet(models.Model):
-    # user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    name = models.CharField(max_length=200, null=True, blank=True)
-    # icon =
-    description = models.TextField(null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Salary(models.Model):
-    # user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    name = models.CharField(max_length=200, null=True, blank=True)
-    # icon =
-    description = models.TextField(null=True, blank=True)
-
-    def __str__(self):
-        return self.name
 
 
 class Transaction(models.Model):
     # user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    salary = models.ForeignKey(Salary, on_delete=models.SET_NULL, null=True)
-    wallet = models.ForeignKey(Wallet, on_delete=models.SET_NULL, null=True)
-    # icon =
+    _from = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name="_from")
+    to = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name="to")
     description = models.TextField(null=True, blank=True)
     addedAt = models.DateTimeField(default=timezone.now(), null=True, blank=True)
     amount = models.DecimalField(max_digits=7, decimal_places=2)
 
     def __str__(self):
-        return self.salary.name + ' -> ' + self.wallet.name
-
-
-class Payment(models.Model):
-    # user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
-    wallet = models.ForeignKey(Wallet, on_delete=models.SET_NULL, null=True)
-    # icon =
-    description = models.TextField(null=True, blank=True)
-    addedAt = models.DateTimeField(default=timezone.now(), null=True, blank=True)
-    amount = models.DecimalField(max_digits=7, decimal_places=2)
-
-    def __str__(self):
-        return self.salary.name + ' -> ' + self.wallet.name
+        return self._from.name + ' -> ' + self.to.name

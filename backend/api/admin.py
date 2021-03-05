@@ -3,8 +3,5 @@ from .models import *
 
 # Register your models here.
 
-admin.site.register(Salary)
-admin.site.register(Wallet)
 admin.site.register(Category)
 admin.site.register(Transaction)
-admin.site.register(Payment)

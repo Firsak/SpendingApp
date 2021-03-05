@@ -1,12 +1,14 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Link} from "react-router-dom";
 import {Col, Row, ListGroup, Button, Card, Table} from "react-bootstrap";
 
-import data from "../testData"
+// import data from "../testData"
 
 function CategoryScreen (props) {
   const {match} = props
-  const category = data.find((c) => c.id === Number(match.params.id))
+  //const category = data.find((c) => c.id === Number(match.params.id))
+
+  const [category, setCategory] = useState({})
 
   return (
     <div>
@@ -50,41 +52,44 @@ function CategoryScreen (props) {
         <Col md={8}>
           <h3>Transactions</h3>
 
-          <Table striped bordered hover responsive className="table-sm">
-            <thead>
-              <tr>
-                <th>FROM</th>
-                <th>TO</th>
-                <th>AMOUNT</th>
-                <th> </th>
-                <th> </th>
-              </tr>
-            </thead>
+          <ListGroup>
+            {category.transactions && category.transactions.map(transaction => (
+              <ListGroup.Item>
+                <Row>
+                  <Col>
+                    {category.id === transaction.from ?
+                      <span>
+                        {transaction.fromName}
+                      </span> :
+                      <Link to={`/category/${transaction.from}`}>
+                        {transaction.fromName}
+                      </Link>
+                    }
+                    <i className="bi bi-arrow-right px-3"></i>
+                    {category.id === transaction.to ?
+                      <span>
+                        {transaction.toName}
+                      </span> :
+                      <Link to={`/category/${transaction.to}`}>
+                        {transaction.toName}
+                      </Link>
+                    }
+                  </Col>
 
-            <tbody>
-              {category.transactions && category.transactions.map(transaction => (
-                <tr key={transaction.id}>
-                  <th>
-                    <Link to={`/category/${transaction.from}`}>
-                    {data.find((c) => c.id === transaction.from).name}
-                    </Link>
-                  </th>
-                  <th>
-                    <Link to={`/category/${transaction.to}`}>
-                      {data.find((c) => c.id === transaction.to).name}
-                    </Link>
-                  </th>
-                  <th>{transaction.amount}</th>
-                  <th>
-                    <Button className="btn btn-sm" variant="primary">Edit</Button>
-                  </th>
-                  <th>
-                    <Button className="btn btn-sm" variant="danger" >Delete</Button>
-                  </th>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+                  <Col>
+                    Amount: ${transaction.amount}
+                  </Col>
+
+                  <Col>
+                    <Row>
+                      <Button className="btn btn-sm px-2 mx-2" variant="primary">Edit</Button>
+                      <Button className="btn btn-sm px-2 mx-2" variant="danger" >Delete</Button>
+                    </Row>
+                  </Col>
+                </Row>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
         </Col>
       </Row>
     </div>

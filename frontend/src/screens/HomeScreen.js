@@ -1,11 +1,21 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Row, Col} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import Category from "../components/Category";
+import axios from "axios";
 
-import data from "../testData"
+// import data from "../testData"
 
 function HomeScreen (props) {
+
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+
+    setData([])
+
+  })
+
   console.log(data)
   return (
     <div>

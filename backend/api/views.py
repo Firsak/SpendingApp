@@ -7,6 +7,9 @@ from datetime import datetime
 
 from rest_framework import status
 
+from .models import Category, Transaction
+from .serializer import CategorySerializer, TransactionSerializer
+
 # Create your views here.
 
 
@@ -21,22 +24,38 @@ def apiInfo(request):
         'changeCategory': 'api/changecategory/<str:pk>/',
         'deleteCategory': 'api/deletecategory/<str:pk>/',
 
-        'addSalary': 'api/addsalary',
-        'changeSalary': 'api/changesalary/<str:pk>/',
-        'deleteSalary': 'api/deletesalary/<str:pk>/',
-
-        'addWallet': 'api/addwallet/',
-        'changeWallet': 'api/changewallet/<str:pk>/',
-        'deleteWallet': 'api/deletewallet/<str:pk>/',
-
         'makeTransaction': 'api/maketransaction/',
         'changeTransaction': 'api/changetransaction/<str:pk>/',
         'deleteTransaction': 'api/deletetransaction/<str:pk>/',
 
-        'makePayment': 'api/makepayment/',
-        'changePayment': 'api/makepayment/<str:pk>/',
-        'deletePayment': 'api/makepayment/<str:pk>/',
-
     }
 
     return Response(urls, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def getCategories(request):
+    categories = Category.objects.all()
+    serializer = CategorySerializer(categories, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getCategory(request, pk):
+    category = Category.objects.get(id=pk)
+    serializer = CategorySerializer(category, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getTransactions(request):
+    transactions = Transaction.objects.all()
+    serializer = TransactionSerializer(transactions, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getTransaction(request, pk):
+    transaction = Transaction.objects.get(id=pk)
+    serializer = TransactionSerializer(transaction, many=False)
+    return Response(serializer.data)

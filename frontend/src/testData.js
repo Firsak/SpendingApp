@@ -11,7 +11,10 @@ const data = [
           "id": 1,
           "from": 1,
           "to": 2,
-          "amount": 1000
+          "amount": 1000,
+          "description": "On main purposes",
+          "fromName": "Work",
+          "toName": "Visa",
         }
       ]
     },
@@ -27,7 +30,10 @@ const data = [
           "id": 1,
           "from": 1,
           "to": 2,
-          "amount": 1000
+          "amount": 1000,
+          "description": "On main purposes",
+          "fromName": "Work",
+          "toName": "Visa",
         }
       ]
     },
