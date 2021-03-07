@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from datetime import datetime
+import decimal
 
 from rest_framework import status
 
@@ -47,6 +48,13 @@ def getCategory(request, pk):
     return Response(serializer.data)
 
 
+@api_view(['DELETE'])
+def deleteCategory(request, pk):
+    category = Category.objects.get(id=pk)
+    category.delete()
+    return Response('Category deleted')
+
+
 @api_view(['GET'])
 def getTransactions(request):
     transactions = Transaction.objects.all()
@@ -59,3 +67,32 @@ def getTransaction(request, pk):
     transaction = Transaction.objects.get(id=pk)
     serializer = TransactionSerializer(transaction, many=False)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def createTransaction(request, pkFrom, pkTo):
+    categoryFrom = Category.objects.get(id=pkFrom)
+    categoryTo = Category.objects.get(id=pkTo)
+    data = request.data
+
+    if data['amount'] == 0:
+        content = {'details': 'Please, select the amount of money'}
+        return Response(content, status=status.HTTP_400_BAD_REQUEST)
+
+    else:
+        transaction = Transaction.objects.create(
+            categoryFrom = categoryFrom,
+            categoryTo = categoryTo,
+            description = data['description'],
+            addedAt = data['addedAt'],
+            amount = data['amount'],
+        )
+
+        print(type(transaction.amount))
+        categoryFrom.amount -= decimal.Decimal(transaction.amount)
+        categoryTo.amount += decimal.Decimal(transaction.amount)
+
+        categoryFrom.save()
+        categoryTo.save()
+
+        return Response('Transaction added')

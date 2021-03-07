@@ -6,6 +6,10 @@ urlpatterns = [
     path('categories/', views.getCategories, name='get-categories'),
     path('transactions/', views.getTransactions, name='get-transactions'),
 
+    path('categories/delete/<str:pk>/', views.deleteCategory, name='delete-category'),
+
+    path('transactions/create/<str:pkFrom>/<str:pkTo>/', views.createTransaction, name='create-transaction'),
+
     path('categories/<str:pk>/', views.getCategory, name='get-category'),
     path('transactions/<str:pk>/', views.getTransaction, name='get-transaction'),
 ]

@@ -9,8 +9,8 @@ const data = [
       "transactions": [
         {
           "id": 1,
-          "from": 1,
-          "to": 2,
+          "fromId": 1,
+          "toId": 2,
           "amount": 1000,
           "description": "On main purposes",
           "fromName": "Work",
