@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 
 import HomeScreen from "./screens/HomeScreen";
 import CategoryScreen from "./screens/CategoryScreen";
+import CategoryCreateScreen from "./screens/CategoryCreateScreen";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Container>
             <Route path='/' component={HomeScreen} exact />
             <Route path='/category/:id/' component={CategoryScreen}  />
+            <Route path='/createcategory' component={CategoryCreateScreen}  />
           </Container>
         </main>
       <Footer />

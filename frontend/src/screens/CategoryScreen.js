@@ -2,9 +2,10 @@ import React, {useEffect, useState} from 'react'
 import {Link} from "react-router-dom";
 import {Col, Row, ListGroup, Button, Card, Table} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import {listCategoryDetails, deleteCategory} from "../actions/categoryActions";
+import {getCategoryDetails, deleteCategory} from "../actions/categoryActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import {CATEGORY_DELETE_RESET} from "../constants/categoryConstants";
 
 // import data from "../testData"
 
@@ -21,11 +22,12 @@ function CategoryScreen (props) {
   const {error: errorDelete, loading: loadingDelete, success: successDelete} = categoryDelete
 
   useEffect(() => {
-    dispatch(listCategoryDetails(match.params.id))
+    dispatch(getCategoryDetails(match.params.id))
   }, [dispatch, match])
 
   useEffect(() => {
     if (successDelete) {
+      dispatch({type: CATEGORY_DELETE_RESET})
       history.push('/')
     }
   }, successDelete)
@@ -83,7 +85,7 @@ function CategoryScreen (props) {
 
               <ListGroup>
                 {category.transactions && category.transactions.map(transaction => (
-                  <ListGroup.Item>
+                  <ListGroup.Item key={transaction.id}>
                     <Row>
                       <Col>
                         {category.id === transaction.fromId ?

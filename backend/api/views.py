@@ -55,6 +55,38 @@ def deleteCategory(request, pk):
     return Response('Category deleted')
 
 
+@api_view(['POST'])
+def createCategory(request):
+    data = request.data
+
+    category = Category.objects.create(
+        name=data['name'],
+        icon=data['icon'],
+        type=data['type'],
+        amount=data['amount'],
+        description=data['description']
+    )
+
+    return Response('Category created')
+
+
+@api_view(['PUT'])
+def updataCategory(request, pk):
+
+    data = request.data
+    category = Category.objects.get(id=pk)
+
+    category.name = data['name']
+    category.icon = data['icon']
+    category.type = data['type']
+    category.amount = data['amount']
+    category.description = data['description']
+
+    category.save()
+
+    return Response('Category updated')
+
+
 @api_view(['GET'])
 def getTransactions(request):
     transactions = Transaction.objects.all()

@@ -12,6 +12,10 @@ import {
   CATEGORY_DELETE_REQUEST,
   CATEGORY_DELETE_SUCCESS,
 
+  CATEGORY_CREATE_FAIL,
+  CATEGORY_CREATE_SUCCESS,
+  CATEGORY_CREATE_REQUEST,
+
 } from "../constants/categoryConstants";
 
 export const listCategories = () => async (dispatch) => {
@@ -36,7 +40,7 @@ export const listCategories = () => async (dispatch) => {
 }
 
 
-export const listCategoryDetails = (id) => async (dispatch) => {
+export const getCategoryDetails = (id) => async (dispatch) => {
   try {
     dispatch({type: CATEGORY_DETAILS_REQUEST})
 
@@ -70,7 +74,31 @@ export const deleteCategory = (id) => async (dispatch) => {
 
   } catch (error) {
     dispatch({
-      type: CATEGORY_DETAILS_FAIL,
+      type: CATEGORY_DELETE_FAIL,
+      payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    })
+  }
+}
+
+
+export const createCategory = (category) => async (dispatch) => {
+  try {
+    dispatch({type: CATEGORY_CREATE_REQUEST})
+
+    const {data} = await axios.post(
+      `/api/categories/create/`,
+      category
+    )
+
+    dispatch({
+      type: CATEGORY_CREATE_SUCCESS,
+    })
+
+  } catch (error) {
+    dispatch({
+      type: CATEGORY_CREATE_FAIL,
       payload: error.response && error.response.data.message
         ? error.response.data.message
         : error.message

@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import {Row, Col} from "react-bootstrap";
+import {Row, Col, Button} from "react-bootstrap";
 import Category from "../components/Category";
 import {listCategories} from "../actions/categoryActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import {CATEGORY_DELETE_RESET} from "../constants/categoryConstants";
+import {CATEGORY_DELETE_RESET, CATEGORY_CREATE_RESET} from "../constants/categoryConstants";
 
 // import data from "../testData"
 
@@ -20,12 +20,9 @@ function HomeScreen (props) {
   const {error: errorDelete, loading: loadingDelete, success: successDelete} = categoryDelete
 
   useEffect(() => {
-    dispatch({type: CATEGORY_DELETE_RESET})
-
     dispatch(listCategories())
   }, [dispatch, history])
 
-  console.log(categories)
   return (
     <div>
       {loading ? <Loader />
@@ -33,6 +30,7 @@ function HomeScreen (props) {
           :
             <div>
               <Row className="py-3">
+                <Button className="btn btn-block" onClick={() => history.push('/createcategory')}>Create Category</Button>
                 <Col>
                   <h1>Salaries</h1>
                   <Row>
