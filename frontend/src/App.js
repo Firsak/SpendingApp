@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import HomeScreen from "./screens/HomeScreen";
 import CategoryScreen from "./screens/CategoryScreen";
 import CategoryCreateScreen from "./screens/CategoryCreateScreen";
+import CategoryUpdateScreen from "./screens/CategoryUpdateScreen";
 
 
 function App() {
@@ -17,8 +18,9 @@ function App() {
         <main className='py-3'>
           <Container>
             <Route path='/' component={HomeScreen} exact />
+            <Route path='/category/create' component={CategoryCreateScreen}  />
+            <Route path='/categoryupdate/:id' component={CategoryUpdateScreen}  />
             <Route path='/category/:id/' component={CategoryScreen}  />
-            <Route path='/createcategory' component={CategoryCreateScreen}  />
           </Container>
         </main>
       <Footer />

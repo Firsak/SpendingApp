@@ -30,7 +30,7 @@ function CategoryScreen (props) {
       dispatch({type: CATEGORY_DELETE_RESET})
       history.push('/')
     }
-  }, successDelete)
+  }, [successDelete])
 
   const deleteCategoryHandler = (id) =>{
     if (window.confirm("Are you sure you want to delete this category?")) {
@@ -68,7 +68,7 @@ function CategoryScreen (props) {
                       </ListGroup.Item>
 
                       <ListGroup.Item>
-                        <Button className="btn btn-block" >Edit Category </Button>
+                        <Button className="btn btn-block" onClick={() => history.push(`/categoryupdate/${category.id}`)} >Edit Category </Button>
                       </ListGroup.Item>
 
                       <ListGroup.Item>

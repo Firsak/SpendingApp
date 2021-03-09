@@ -7,6 +7,7 @@ import {
   categoryDetailsReducer,
   categoryDeleteReducer,
   categoryCreateReducer,
+  categoryUpdateReducer,
 } from './reducers/categoryReducers'
 
 
@@ -15,6 +16,7 @@ const reducer = combineReducers({
   categoryDetails: categoryDetailsReducer,
   categoryDelete: categoryDeleteReducer,
   categoryCreate: categoryCreateReducer,
+  categoryUpdate: categoryUpdateReducer,
 })
 
 const initialState = {}

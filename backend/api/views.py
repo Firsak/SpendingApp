@@ -102,10 +102,12 @@ def getTransaction(request, pk):
 
 
 @api_view(['POST'])
-def createTransaction(request, pkFrom, pkTo):
+def createTransaction(request):
+    data = request.data
+    pkFrom = data["pkFrom"]
+    pkTo = data["pkTo"]
     categoryFrom = Category.objects.get(id=pkFrom)
     categoryTo = Category.objects.get(id=pkTo)
-    data = request.data
 
     if data['amount'] == 0:
         content = {'details': 'Please, select the amount of money'}

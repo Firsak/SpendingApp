@@ -30,7 +30,7 @@ function HomeScreen (props) {
           :
             <div>
               <Row className="py-3">
-                <Button className="btn btn-block" onClick={() => history.push('/createcategory')}>Create Category</Button>
+                <Button className="btn btn-block" onClick={() => history.push('category/create')}>Create Category</Button>
                 <Col>
                   <h1>Salaries</h1>
                   <Row>

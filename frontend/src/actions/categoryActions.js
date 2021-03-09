@@ -14,7 +14,7 @@ import {
 
   CATEGORY_CREATE_FAIL,
   CATEGORY_CREATE_SUCCESS,
-  CATEGORY_CREATE_REQUEST,
+  CATEGORY_CREATE_REQUEST, CATEGORY_UPDATE_REQUEST, CATEGORY_UPDATE_SUCCESS, CATEGORY_UPDATE_FAIL,
 
 } from "../constants/categoryConstants";
 
@@ -99,6 +99,31 @@ export const createCategory = (category) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CATEGORY_CREATE_FAIL,
+      payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    })
+  }
+}
+
+
+export const updateCategory = (category) => async (dispatch) => {
+  try {
+    dispatch({type: CATEGORY_UPDATE_REQUEST})
+
+    const {data} = await axios.put(
+      `/api/categories/update/${category.id}/`,
+      category
+    )
+
+    dispatch({
+      type: CATEGORY_UPDATE_SUCCESS,
+    })
+
+
+  } catch (error) {
+    dispatch({
+      type: CATEGORY_UPDATE_FAIL,
       payload: error.response && error.response.data.message
         ? error.response.data.message
         : error.message
